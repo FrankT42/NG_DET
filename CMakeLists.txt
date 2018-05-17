@@ -23,7 +23,7 @@ add_executable(N_G_Det N_G_Det.cc
 target_link_libraries(N_G_Det ${Geant4_LIBRARIES} ${HBOOK_LIBRARIES})
 
 set(N_G_DET_Scripts
-	init_vis.mac vis.mac AmBe.mac Beam.mac
+	init_vis.mac vis.mac AmBe.mac Beam.mac Ion.mac Ion_Beam.mac
 )
 foreach(_script ${N_G_DET_Scripts})
   configure_file(

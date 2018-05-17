@@ -1,0 +1,15 @@
+/run/initialize
+#macro to simulate ion decay inside a scintilator
+/gps/particle ion
+/gps/ion 96 241
+/gps/pos/centre 0. 0. 0. mm
+#/gps/pos/type Plane
+#/gps/pos/shape Square
+#/gps/pos/halfx 3 mm
+#/gps/pos/halfz 3 mm
+#/gps/ang/type iso
+/gps/pos/type Beam
+/gps/direction 0 0 1
+/gps/ene/type Gauss
+/gps/ene/mono 0 MeV
+/run/beamOn 10

@@ -385,6 +385,13 @@ assert(sizeof(scintilSlow) == sizeof(photonEnergy));
 //
 // ------------- Volumes --------------
 
+
+//==============================================
+// Volume Overhall
+//==============================================
+// Geometry has been overhalled to match discussed geometry
+//
+//===============================================
 // The experimental Hall
 //
   G4Box* expHall_box = new G4Box("World",fExpHall_x,fExpHall_y,fExpHall_z);
@@ -396,126 +403,37 @@ assert(sizeof(scintilSlow) == sizeof(photonEnergy));
   expHall_phys
   = new G4PVPlacement(0,G4ThreeVector(),expHall_log,"World",0,false,0);
     expHall_log->SetVisAttributes(G4VisAttributes::Invisible);
-
-//Al casing
-//
-    G4double r_case_in[5] = {0*mm,27.25*mm,27.25*mm,27.25*mm,27.25*mm};
-    G4double r_case_out[5] = {28.5*mm,28.5*mm,28.5*mm,38.1*mm,38.1*mm};
-    G4double h_case[5] = {0*mm,0.8*mm,47.79*mm,47.8*mm,56.3*mm};
-    G4Polycone* case_box = new G4Polycone("Casing",0,360*deg,5,h_case,r_case_in,r_case_out);
-    G4LogicalVolume* case_log = new G4LogicalVolume(case_box,Al,"casing",0,0,0);
-    G4VPhysicalVolume* case_phys = new G4PVPlacement(0,G4ThreeVector(0,0,-62*mm),case_log,"casing",expHall_log,false,0);
-    
-// The Light Guide
-//
-    G4double r1[6] = {0*mm,5*mm,10*mm,15*mm,20*mm,24.01*mm};
-    G4double r2[6] = {0,0,0,0,0,0};
-    G4double r3[6] = {28.25*mm,26.65*mm,24.779*mm ,22.525*mm,19.488*mm ,13.34*mm};
-    G4double r4[6] = {28.35*mm,26.75*mm,24.879*mm,22.625*mm,19.588*mm,13.44*mm};
-    G4double r5[6] = {28.55*mm,26.95*mm,25.079*mm,22.825*mm,19.788*mm,13.64*mm};
-    // G4Cons* Guide_box = new G4Cons("Guide",0*mm,25.5*mm,0*mm,25.4/2*mm,30*mm,0*deg,360*deg);
-    G4Polycone* Guide_box = new G4Polycone("Guide",0,360*deg,6,r1,r2,r3);
-
-  G4LogicalVolume* Guide_log
-    = new G4LogicalVolume(Guide_box,perspex,"Guide",0,0,0);
-
-  G4VPhysicalVolume* Guide_phys
-    = new G4PVPlacement(0,G4ThreeVector(0,0,-5.7*mm),Guide_log,"Guide",
-                        expHall_log,false,0);
-//Guide Wrap
-//
-//G4Cons* Guide_Wrap = new G4Cons("Guide_Wrap",25.5*mm,25.8*mm,25.4/2*mm,25.8/2*mm,30*mm,0*deg,360*deg);
-    G4Polycone* Guide_Wrap = new G4Polycone("Guide_Wrap",0,360*deg,6,r1,r3,r4);
-
-  G4LogicalVolume* Guide_Wrap_log
-    = new G4LogicalVolume(Guide_Wrap,perspex,"Guide_Wrap",0,0,0);
-
-  // G4VPhysicalVolume* Guide_Wrap_phys
- Guide_Wrap_phys
-  = new G4PVPlacement(0,G4ThreeVector(0,0,-5.7*mm),Guide_Wrap_log,"Guide_Wrap",
-        expHall_log,false,0);
     
 
 
 
 // The Scintillator
 //
-  G4Tubs* Scint_box = new G4Tubs("Scint",0*mm,25.5*mm,25.5*mm,0.*deg,360.*deg);
+    G4Box* Scint_box = new G4Box("Scint",50*mm,0.5*mm,0.5*mm);
 
   G4LogicalVolume* Scint_log
     = new G4LogicalVolume(Scint_box,Ej228,"Scint",0,0,0);
 //G4VPhysicalVolume* Scint_phys =
-      fScint = new G4PVPlacement(0,G4ThreeVector(0,0,-34.0*mm),Scint_log,"Scint",
+      fScint = new G4PVPlacement(0,G4ThreeVector(0,0,0*mm),Scint_log,"Scint",
                         expHall_log,false,0);
-// Scintillator Wrapper
-  G4Tubs* Scint_Wrap = new G4Tubs("Scint_Wrap",25.5*mm, 25.6*mm,25.5*mm,0*deg,360*deg);
-  G4LogicalVolume* Scint_Wrap_log
-    = new G4LogicalVolume(Scint_Wrap,wrapping,"Scint_Wrap",0,0,0);
-  G4VPhysicalVolume* Scint_Wrap_phys =
-  new G4PVPlacement(0,G4ThreeVector(0,0,-34.0*mm),Scint_Wrap_log,"Scint_Wrap",
-                        expHall_log,false,0);
-  G4Tubs* Scint_Wrap_2 = new G4Tubs("Scint_Wrap_2",0, 25.5*mm,0.4*mm,0*deg,360*deg);
-  G4LogicalVolume* Scint_Wrap_2_log
-    = new G4LogicalVolume(Scint_Wrap_2,wrapping,"Scint_Wrap_2",0,0,0);
-  G4VPhysicalVolume* Scint_Wrap_2_phys =
-  new G4PVPlacement(0,G4ThreeVector(0,0,-60.0*mm),Scint_Wrap_2_log,"Scint_Wrap_2",
-                      expHall_log,false,0);
-G4Tubs* Window_tub = new G4Tubs("window", 0*mm,27.25*mm, 1.5*mm,0*deg,360*deg); 
-G4LogicalVolume* Window_log = new G4LogicalVolume(Window_tub,quartz,"window",0,0,0);
- G4VPhysicalVolume* Window_Pys =new G4PVPlacement(0,G4ThreeVector(0,0,-7*mm),Window_log,"window",expHall_log,false,0);
 //SiPM
- G4Box* SiPM_box = new G4Box("SiPM", 13.34*mm,13.34*mm, 0.3*mm);
+ G4Box* SiPM_box = new G4Box("SiPM", 0.025*mm,0.5*mm, 0.5*mm);
  G4LogicalVolume* SiPM_log = new G4LogicalVolume(SiPM_box, SiPM_mat, "SiPM",0,0,0);
- fSiPM = new G4PVPlacement(0,G4ThreeVector(0,0,18.53), SiPM_log,"SiPM", expHall_log,false,0);
+ fSiPM = new G4PVPlacement(0,G4ThreeVector(-50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,0);//make 2 copies
+  fSiPM = new G4PVPlacement(0,G4ThreeVector(50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,1);//make 2 copies
+ 
 
 // ------------- Surfaces --------------
 //
 //Wrapping
 //
-  G4OpticalSurface* opWrapSurface = new G4OpticalSurface("WrapSurface");
-  opWrapSurface->SetType(dielectric_metal);
-  opWrapSurface->SetFinish(polished);
-  opWrapSurface->SetModel(glisur);
-
+ 
   G4double pp[] = {2.0*eV, 3.5*eV};
   const G4int num2 = sizeof(pp)/sizeof(G4double);
   G4double reflectivity3[] = {1.,1.};
   assert(sizeof(reflectivity2) == sizeof(pp));
   G4double efficiency2[] = {0.0,0.0};
   assert(sizeof(effieciency2) == sizeof(pp));
-  G4MaterialPropertiesTable* ScintWrap_MPT = new G4MaterialPropertiesTable();
-  ScintWrap_MPT->AddProperty("Reflectivity",pp,reflectivity3,num2);
-  ScintWrap_MPT->AddProperty("Efficiency",pp,efficiency2,num2);
-  opWrapSurface->SetMaterialPropertiesTable(ScintWrap_MPT);
-  new G4LogicalBorderSurface("WrapSurface",
-                                 Scint_Wrap_phys,expHall_phys,opWrapSurface);
-  G4OpticalSurface* opWrapSurface2 = new G4OpticalSurface("WrapSurface2");
-  opWrapSurface2->SetType(dielectric_metal);
-  opWrapSurface2->SetFinish(polished);
-  opWrapSurface2->SetModel(glisur);
-   opWrapSurface2->SetMaterialPropertiesTable(ScintWrap_MPT);
-  new G4LogicalBorderSurface("WrapSurface",
-                                 Scint_Wrap_phys,expHall_phys,opWrapSurface);
-//Guide_Wrapping
-//
-  G4OpticalSurface* opGuideWrapSurface = new G4OpticalSurface("GuideWrapSurface");
-  opGuideWrapSurface->SetType(dielectric_metal);
-  opGuideWrapSurface->SetFinish(polished);
-  opGuideWrapSurface->SetModel(glisur);
-  opGuideWrapSurface->SetMaterialPropertiesTable(ScintWrap_MPT);
-  
-  new G4LogicalBorderSurface("GuideWrapSurface",
-                                 Guide_Wrap_phys,expHall_phys,opGuideWrapSurface);
-
-// Light Guide
-//
-  G4OpticalSurface* opGuideSurface = new G4OpticalSurface("GuideSurface");
-  opGuideSurface->SetType(dielectric_dielectric);
-  opGuideSurface->SetFinish(polished);
-  opGuideSurface->SetModel(unified);
-
-  new G4LogicalBorderSurface("GuideSurface",
-                                 Guide_phys,expHall_phys,opGuideSurface);
 //SiPM
 //
   G4OpticalSurface* opSiPMSurface = new G4OpticalSurface("SiPMSurface");
@@ -523,7 +441,7 @@ G4LogicalVolume* Window_log = new G4LogicalVolume(Window_tub,quartz,"window",0,0
   opSiPMSurface->SetFinish(polished);
   opSiPMSurface->SetModel(unified);
 
-  new G4LogicalBorderSurface("SiPMSurface", fSiPM,Guide_phys,opSiPMSurface);
+  // new G4LogicalBorderSurface("SiPMSurface", fSiPM,Guide_phys,opSiPMSurface);
 // Scintillator
 //
   G4OpticalSurface* opScintSurface = new G4OpticalSurface("ScintSurface");
@@ -561,7 +479,7 @@ G4LogicalVolume* Window_log = new G4LogicalVolume(Window_tub,quartz,"window",0,0
   G4cout << "Water Surface G4MaterialPropertiesTable" << G4endl;
   myST1->DumpTable();
 
-  opGuideSurface->SetMaterialPropertiesTable(myST1);
+ 
   opSiPMSurface->SetMaterialPropertiesTable(myST1);
 
   //OpticalScintSurface
@@ -586,8 +504,6 @@ G4LogicalVolume* Window_log = new G4LogicalVolume(Window_tub,quartz,"window",0,0
   G4cout << "Air Surface G4MaterialPropertiesTable" << G4endl;
   myST3->DumpTable();
 
-  opWrapSurface->SetMaterialPropertiesTable(myST3);
-  opWrapSurface2->SetMaterialPropertiesTable(myST3);
   G4MaterialPropertiesTable *myST4 = new G4MaterialPropertiesTable();
 
   myST4->AddProperty("REFLECTIVITY", ephoton, reflectivity2, num);
@@ -596,7 +512,7 @@ G4LogicalVolume* Window_log = new G4LogicalVolume(Window_tub,quartz,"window",0,0
   G4cout << "Air Surface G4MaterialPropertiesTable" << G4endl;
   myST4->DumpTable();
 
-  opGuideWrapSurface->SetMaterialPropertiesTable(myST4);
+ 
 
 
 
