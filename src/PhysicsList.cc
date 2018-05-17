@@ -344,10 +344,10 @@ void PhysicsList::ConstructOptical()
   cerenkovProcess->SetMaxBetaChangePerStep(10.0);
   cerenkovProcess->SetTrackSecondariesFirst(true);
   G4Scintillation* scintillationProcess = new G4Scintillation("Scintillation");
-  scintillationProcess->SetScintillationYieldFactor(0.95);
+  scintillationProcess->SetScintillationYieldFactor(1.);
   scintillationProcess->SetTrackSecondariesFirst(true);
   G4Scintillation* NscintillationProcess = new G4Scintillation("Scintillation");
-  NscintillationProcess->SetScintillationYieldFactor(.65);
+  NscintillationProcess->SetScintillationYieldFactor(1.);//set scint to 1, is this the right idea?
   NscintillationProcess->SetTrackSecondariesFirst(true);
   G4OpAbsorption* absorptionProcess = new G4OpAbsorption();
   G4OpRayleigh* rayleighScatteringProcess = new G4OpRayleigh();

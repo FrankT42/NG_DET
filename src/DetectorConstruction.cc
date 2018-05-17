@@ -77,6 +77,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   perspex->AddElement(O, 2);
   perspex->AddElement(C, 5);
 
+  G4Material* Ej228 = new G4Material("Ej228", density = 1.023*g/cm3, nelements = 2);
+  Ej228->AddElement(H,10);
+  Ej228->AddElement(C,4);
+
     G4Material* SiPM_mat = new G4Material("SiPM_mat", density= 1.18*g/cm3, nelements=3);
   SiPM_mat->AddElement(H, 8);
   SiPM_mat->AddElement(O, 2);
@@ -276,6 +280,36 @@ assert(sizeof(scintilSlow) == sizeof(photonEnergy));
   perspex->SetMaterialPropertiesTable(myMPT3);
   SiPM_mat->SetMaterialPropertiesTable(myMPT3);
 
+
+  // Ej228
+  //
+  G4MaterialPropertiesTable* MPT_Ej228 = new G4MaterialPropertiesTable();
+  G4double refractiveIndexEj[sizeof(photonEnergy)/sizeof(double)];
+   G4double ScintSlowEj[sizeof(photonEnergy)/sizeof(double)];
+    G4double ScintFastEj[sizeof(photonEnergy)/sizeof(double)];
+  for(int i = 0; i<sizeof(photonEnergy)/sizeof(double);i++){
+    refractiveIndexEj[i] = 1.58;
+    ScintSlowEj[i] = 1;
+    ScintFastEj[i] = 1;
+  }
+
+  
+  MPT_Ej228->AddProperty("RINDEX",       photonEnergy, refractiveIndexEj,nEntries)
+        ->SetSpline(true);
+  MPT_Ej228->AddProperty("FASTCOMPONENT",photonEnergy, ScintFastEj,     nEntries)
+        ->SetSpline(true);
+  MPT_Ej228->AddProperty("SLOWCOMPONENT",photonEnergy, ScintSlowEj,     nEntries)
+        ->SetSpline(true);
+
+  MPT_Ej228->AddConstProperty("SCINTILLATIONYIELD",10200./MeV);
+  MPT_Ej228->AddConstProperty("RESOLUTIONSCALE",1.0);
+  MPT_Ej228->AddConstProperty("FASTTIMECONSTANT", 0.5*ns);
+  MPT_Ej228->AddConstProperty("SLOWTIMECONSTANT",1.4*ns);
+  MPT_Ej228->AddConstProperty("YIELDRATIO",1);
+  Ej228->SetMaterialPropertiesTable(MPT_Ej228);
+
+  
+  
 //
 // CLYC
 //
@@ -409,7 +443,7 @@ assert(sizeof(scintilSlow) == sizeof(photonEnergy));
   G4Tubs* Scint_box = new G4Tubs("Scint",0*mm,25.5*mm,25.5*mm,0.*deg,360.*deg);
 
   G4LogicalVolume* Scint_log
-    = new G4LogicalVolume(Scint_box,CLYC,"Scint",0,0,0);
+    = new G4LogicalVolume(Scint_box,Ej228,"Scint",0,0,0);
 //G4VPhysicalVolume* Scint_phys =
       fScint = new G4PVPlacement(0,G4ThreeVector(0,0,-34.0*mm),Scint_log,"Scint",
                         expHall_log,false,0);
