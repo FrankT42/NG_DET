@@ -30,6 +30,8 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4Track* track = aStep->GetTrack();
   G4String ParticleName = track->GetDynamicParticle()->
                                  GetParticleDefinition()->GetParticleName();
+  
+
   if(ParticleName=="neutron"||ParticleName=="gamma"){
     ss<<ParticleName<<std::endl;
     Tout<<ss.str();
@@ -37,6 +39,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4VPhysicalVolume* volume
   = aStep->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
 
+  G4int cpyNum = aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
  G4double GlobalTime = track->GetGlobalTime();
  G4double DeltaTime = aStep->GetDeltaTime();
  G4ThreeVector location = track->GetPosition();
@@ -46,7 +49,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   if(volume ==fDetector->GetSiPM()){
     if(ParticleName == "opticalphoton"){
       fEventAction->AddSiPM(1);
-      fEventAction->SiPMTrack(GlobalTime, DeltaTime, location);
+      fEventAction->SiPMTrack(cpyNum,GlobalTime, DeltaTime, location);
       track->SetTrackStatus(fStopAndKill);
     }
     else{

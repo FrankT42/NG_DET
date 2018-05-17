@@ -19,7 +19,7 @@ public:
   inline void AddEdep(G4double de){fEdep+=de;};
   inline void AddScint(G4int dS){fScint++;};
   inline void AddSiPM(G4int dSi){fSiPM++;};
-  void SiPMTrack(G4double global_time,G4double delta_time, G4ThreeVector location); 
+  void SiPMTrack(G4int idx,G4double global_time,G4double delta_time, G4ThreeVector location); 
 private:
   RunAction* fRunAction;
   HistoManager* fHistoManager;
@@ -28,7 +28,7 @@ private:
   G4int fSiPM;
   G4int fScint;
   G4int fPrintModulo;
-  std::vector<G4double> x,y,t_g,t_d;
+  std::vector<G4double> x,y,t_g,t_d,t_g1;
 
 };
 #endif

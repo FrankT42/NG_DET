@@ -53,6 +53,9 @@ void HistoManager::Book()
   analysisManager->CreateNtupleDColumn("Time1");
   analysisManager->CreateNtupleDColumn("Time2");
   analysisManager->FinishNtuple();
+  analysisManager->CreateNtuple("Ntuple3","TDC");
+  analysisManager->CreateNtupleDColumn("Time_TDC");
+  analysisManager->FinishNtuple();
  
   
   fFactoryOn = true;
@@ -90,7 +93,7 @@ void HistoManager::FillNtuple(G4double Edep, G4int Scint,G4int SiPM_num){
   analysisManager->AddNtupleRow(0);
   }
 }
-void HistoManager::FillTimeAndLoc(std::vector<G4double> x, std::vector<G4double> y, std::vector<G4double>t1,std::vector<G4double> t2)
+void HistoManager::FillTimeAndLoc(std::vector<G4double> x, std::vector<G4double> y, std::vector<G4double>t1,std::vector<G4double> t2, std::vector<G4double> t1_1)
 {
   
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
@@ -111,12 +114,28 @@ void HistoManager::FillTimeAndLoc(std::vector<G4double> x, std::vector<G4double>
     analysisManager->FillNtupleDColumn(1,1,t2[i]);
     ss<<t1[i]<<" ";
 	}
-    analysisManager->AddNtupleRow(1);
+	 analysisManager->AddNtupleRow(1);
     // SteppingAction::GetStream()<<std::endl;
     
 
   }
-    ss<<std::endl;
+    // auto d1 = min_element(t1.begin(),t1.end());
+    //	auto d2 = min_element(t1_1.begin(),t1_1.end());
+    double d1 = 1<<20;
+    double d2 = 1<<20;
+    for(int i=0;i<t1.size();i++){
+      if(t1[i]<d1){d1=t1[i];}
+    }
+        for(int i=0;i<t1_1.size();i++){
+	  if(t1_1[i]<d2){d1=t1_1[i];}
+    }
+    G4double dif = abs(d1-d2);
+    if(dif<1){
+	analysisManager->FillNtupleDColumn(2,0,dif);
+		analysisManager->AddNtupleRow(2);
+    }
+	//	std::cout<<dif<<std::endl;
+	ss<<std::endl;
     SteppingAction::GetStream()<<ss.str();
     //        for(int i = 0; i<t2.size();i++){
     // analysisManager->FillH1(6,t2[i],1);
