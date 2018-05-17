@@ -55,6 +55,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4Element* Y  = new G4Element("Yttrium",  "Y",  z=39, a=88.905*g/mole);
   G4Element* Cl = new G4Element("Chlorine", "Cl", z=17, a=35.45*g/mole);
   G4Element* Ce = new G4Element("Cerium",   "Ce", z=58, a=140.116*g/mole);
+  G4Element* Li_6 = new G4Element("Lithium", "Li", z=3, a=6.*g/mole); 
 
   G4Material* air = new G4Material("Air", density=1.29*mg/cm3, nelements=2);
   air->AddElement(N, 70.*perCent);
@@ -90,7 +91,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   G4Material* CLYC = new G4Material("CLYC", density= 3.31*g/cm3, nelements=5);
   CLYC->AddElement(Cs, 2);
-  CLYC->AddElement(Li, 1);
+  CLYC->AddElement(Li_6, 1);
   CLYC->AddElement(Y, 1);
   CLYC->AddElement(Cl,6);
   CLYC->AddElement(Ce,1);

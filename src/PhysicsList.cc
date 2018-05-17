@@ -373,7 +373,7 @@ void PhysicsList::ConstructOptical()
       pmanager->SetProcessOrdering(cerenkovProcess,idxPostStep);
     }
     if (scintillationProcess->IsApplicable(*particle)) {
-      if(particleName == "neutron"){
+      if(particleName == "neutron"||particleName=="alpha"){
 	pmanager->AddProcess(NscintillationProcess);
       }
       else{
