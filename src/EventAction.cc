@@ -64,7 +64,7 @@ void EventAction::EndOfEventAction(const G4Event*)
   //Do the Ntuples
   //
   fHistoManager->FillNtuple(fEdep,fScint,fSiPM);
-  fHistoManager->FillTimeAndLoc(x,y,t_g,t_d,t_g1);
+  fHistoManager->FillTimeAndLoc(fEdep,x,y,t_g,t_d,t_g1);
 
   
 }

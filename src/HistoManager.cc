@@ -93,7 +93,7 @@ void HistoManager::FillNtuple(G4double Edep, G4int Scint,G4int SiPM_num){
   analysisManager->AddNtupleRow(0);
   }
 }
-void HistoManager::FillTimeAndLoc(std::vector<G4double> x, std::vector<G4double> y, std::vector<G4double>t1,std::vector<G4double> t2, std::vector<G4double> t1_1)
+void HistoManager::FillTimeAndLoc(G4double Edep,std::vector<G4double> x, std::vector<G4double> y, std::vector<G4double>t1,std::vector<G4double> t2, std::vector<G4double> t1_1)
 {
   
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
@@ -121,20 +121,22 @@ void HistoManager::FillTimeAndLoc(std::vector<G4double> x, std::vector<G4double>
   }
     // auto d1 = min_element(t1.begin(),t1.end());
     //	auto d2 = min_element(t1_1.begin(),t1_1.end());
+    if(Edep>0){
     double d1 = 1<<20;
     double d2 = 1<<20;
     for(int i=0;i<t1.size();i++){
-      if(t1[i]<d1){d1=t1[i];}
+      if(t1[i]<d1&&t1[i]>0){d1=t1[i];}
     }
         for(int i=0;i<t1_1.size();i++){
-	  if(t1_1[i]<d2){d1=t1_1[i];}
+	  if(t1_1[i]<d2&&t1_1[i]>0){d1=t1_1[i];}
     }
     G4double dif = abs(d1-d2);
-    if(dif<1){
-	analysisManager->FillNtupleDColumn(2,0,dif);
+     if(dif>1000){
+	analysisManager->FillNtupleDColumn(2,0,dif*1000);
 		analysisManager->AddNtupleRow(2);
+		}
     }
-	//	std::cout<<dif<<std::endl;
+     //	std::cout<<dif<<std::endl;
 	ss<<std::endl;
     SteppingAction::GetStream()<<ss.str();
     //        for(int i = 0; i<t2.size();i++){

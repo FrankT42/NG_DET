@@ -18,7 +18,7 @@ public:HistoManager();
 
   void FillHisto(G4int id, G4double e, G4double weight = 1.0);
   void FillNtuple(G4double Edep,G4int Scint, G4int SiPM);
-  void FillTimeAndLoc(std::vector<G4double> x, std::vector<G4double> y, std::vector<G4double>t1 ,std::vector<G4double> t2, std::vector<G4double> t1_1);
+  void FillTimeAndLoc(G4double Edep,std::vector<G4double> x, std::vector<G4double> y, std::vector<G4double>t1 ,std::vector<G4double> t2, std::vector<G4double> t1_1);
   
 private:
   G4bool fFactoryOn;
