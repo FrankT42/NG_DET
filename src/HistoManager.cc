@@ -133,7 +133,7 @@ void HistoManager::FillTimeAndLoc(G4double Edep,std::vector<G4double> x, std::ve
       //
       //double d_1 = (double)d1;
       //double d_2 = (double)d2;
-      double dif = abs(d1-d2);
+      double dif = std::sqrt(std::pow((d1-d2),2));
       //      std::cout<<d1<<" "<<d2<<" "<<dif<<std::endl;
     //if(dif>0){
 	analysisManager->FillNtupleDColumn(2,0,dif*ns);
