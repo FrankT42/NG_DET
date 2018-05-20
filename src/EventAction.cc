@@ -23,15 +23,19 @@ void EventAction::SiPMTrack(G4int idx,G4double global_time,G4double delta_time, 
 {
 
   if(idx==0){
+    if(global_time>0){
   t_g.push_back(global_time);
+    }
   t_d.push_back(delta_time);
   x.push_back(location.x());
   y.push_back(location.y());
   }
   if(idx==1)
     {
+      if(global_time>0){
       t_g1.push_back(global_time);
-    }
+      }
+      }
   }
 
 //============================================

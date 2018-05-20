@@ -119,8 +119,8 @@ void HistoManager::FillTimeAndLoc(G4double Edep,std::vector<G4double> x, std::ve
     
 
   }
-     auto d1 = min_element(t1.begin(),t1.end());
-    	auto d2 = min_element(t1_1.begin(),t1_1.end());
+     auto d1 = *min_element(t1.begin(),t1.end());
+     auto d2 = *min_element(t1_1.begin(),t1_1.end());
     if(Edep>0){
       //double d1 = 1<<20;
       //double d2 = 1<<20;
@@ -129,8 +129,11 @@ void HistoManager::FillTimeAndLoc(G4double Edep,std::vector<G4double> x, std::ve
       // }
       //for(int i=0;i<t1_1.size();i++){
       //  if(t1_1[i]<d2&&t1_1[i]>0){d1=t1_1[i];}
-      //}
-    G4double dif = abs(*d1-*d2);
+      //
+      //double d_1 = (double)d1;
+      //double d_2 = (double)d2;
+      double dif = (d1-d2);
+      //      std::cout<<d1<<" "<<d2<<" "<<dif<<std::endl;
     //if(dif>0){
 	analysisManager->FillNtupleDColumn(2,0,dif*ns);
 		analysisManager->AddNtupleRow(2);
