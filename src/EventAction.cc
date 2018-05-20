@@ -21,6 +21,7 @@ EventAction::~EventAction()
 //===============================================
 void EventAction::SiPMTrack(G4int idx,G4double global_time,G4double delta_time, G4ThreeVector location)
 {
+
   if(idx==0){
   t_g.push_back(global_time);
   t_d.push_back(delta_time);

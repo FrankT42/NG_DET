@@ -420,7 +420,7 @@ assert(sizeof(scintilSlow) == sizeof(photonEnergy));
  G4Box* SiPM_box = new G4Box("SiPM", 0.025*mm,0.5*mm, 0.5*mm);
  G4LogicalVolume* SiPM_log = new G4LogicalVolume(SiPM_box, SiPM_mat, "SiPM",0,0,0);
  fSiPM = new G4PVPlacement(0,G4ThreeVector(-50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,0);//make 2 copies
-  fSiPM = new G4PVPlacement(0,G4ThreeVector(50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,1);//make 2 copies
+  fSiPM1 = new G4PVPlacement(0,G4ThreeVector(50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,1);//make 2 copies
  
 
 // ------------- Surfaces --------------

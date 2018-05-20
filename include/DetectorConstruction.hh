@@ -16,6 +16,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     virtual ~DetectorConstruction();
   inline const G4VPhysicalVolume* GetScint(){return fScint;}
   inline const G4VPhysicalVolume* GetSiPM(){return fSiPM;}
+  inline const G4VPhysicalVolume* GetSiPM1(){return fSiPM1;}
   inline const G4VPhysicalVolume* GetphysWorld(){return expHall_phys;}
   inline const G4VPhysicalVolume* GetWrap(){return Guide_Wrap_phys;}
   public:
@@ -37,6 +38,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
   G4VPhysicalVolume* Guide_Wrap_phys;
   G4VPhysicalVolume* fScint;
   G4VPhysicalVolume* fSiPM;
+  G4VPhysicalVolume* fSiPM1;
   G4VPhysicalVolume* expHall_phys;
 };
 
