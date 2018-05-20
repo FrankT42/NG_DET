@@ -131,8 +131,8 @@ void HistoManager::FillTimeAndLoc(G4double Edep,std::vector<G4double> x, std::ve
 	  if(t1_1[i]<d2&&t1_1[i]>0){d1=t1_1[i];}
     }
     G4double dif = abs(d1-d2);
-     if(dif>1000){
-	analysisManager->FillNtupleDColumn(2,0,dif*1000);
+     if(dif>0){
+	analysisManager->FillNtupleDColumn(2,0,dif*ns);
 		analysisManager->AddNtupleRow(2);
 		}
     }
