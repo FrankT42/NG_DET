@@ -409,20 +409,27 @@ assert(sizeof(scintilSlow) == sizeof(photonEnergy));
 
 // The Scintillator
 //
-    G4Box* Scint_box = new G4Box("Scint",50*mm,0.5*mm,0.5*mm);
+    G4Box* Scint_box = new G4Box("Scint",15*mm,15*mm,15*mm);
 
   G4LogicalVolume* Scint_log
     = new G4LogicalVolume(Scint_box,Ej228,"Scint",0,0,0);
 //G4VPhysicalVolume* Scint_phys =
-      fScint = new G4PVPlacement(0,G4ThreeVector(0,0,0*mm),Scint_log,"Scint",
+      fScint = new G4PVPlacement(0,G4ThreeVector(0,0,15.05*mm),Scint_log,"Scint",
                         expHall_log,false,0);
 //SiPM
- G4Box* SiPM_box = new G4Box("SiPM", 0.025*mm,0.5*mm, 0.5*mm);
- G4LogicalVolume* SiPM_log = new G4LogicalVolume(SiPM_box, SiPM_mat, "SiPM",0,0,0);
- fSiPM = new G4PVPlacement(0,G4ThreeVector(-50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,0);//make 2 copies
-  fSiPM1 = new G4PVPlacement(0,G4ThreeVector(50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,1);//make 2 copies
+//I'm tracking with the logical volume now, this gives me some freedom in the definition of
+//placment, but easily changed back
  
-
+ G4Box* SiPM_box = new G4Box("SiPM", 1.58*mm,1.58*mm, 0.025*mm);
+ SiPM_log = new G4LogicalVolume(SiPM_box, SiPM_mat, "SiPM",0,0,0);
+ //fSiPM = new G4PVPlacement(0,G4ThreeVector(-50.025*mm,0,0), SiPM_log,"SiPM", expHall_log,false,0);
+ //now initialize a placment loop to get the positions correct in x and y
+ //8x8 array of 3mm
+ for(int i=0;i<8;i++){
+   for(int j=0;j<8;j++){
+     fSiPM = new G4PVPlacement(0,G4ThreeVector((i*3.2-9.6)*mm,(j*3.2-9.6)*mm,0), SiPM_log,"SiPM", expHall_log,false,i*8+j);
+   }
+ }
 // ------------- Surfaces --------------
 //
 //Wrapping

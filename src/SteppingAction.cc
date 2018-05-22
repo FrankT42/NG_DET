@@ -46,7 +46,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
 //collect energy ect step by step
- if(volume ==fDetector->GetSiPM()||volume==fDetector->GetSiPM1()){
+ if(volume->GetLogicalVolume() ==fDetector->GetSiPMLog()){
     if(ParticleName == "opticalphoton"){
       fEventAction->AddSiPM(1);
       fEventAction->SiPMTrack(cpyNum,GlobalTime, DeltaTime, location);
